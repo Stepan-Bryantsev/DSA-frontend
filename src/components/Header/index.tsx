@@ -69,7 +69,7 @@ export const Header = () => {
                       aria-expanded={open ? "true" : undefined}
                     >
                       <Avatar sx={{ width: 32, height: 32 }}>
-                        {userData.email[0].toUpperCase()}
+                        {userData.email ? userData.email[0].toUpperCase() : "A"}
                       </Avatar>
                     </IconButton>
                   </Tooltip>
