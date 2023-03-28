@@ -7,6 +7,22 @@ export const fetchProjects = createAsyncThunk(
     const { data } = await axios.get("/projects", {
       params: {
         search: queryParams.search,
+        skip: queryParams.skip,
+        take: queryParams.take,
+      },
+    });
+    return data;
+  }
+);
+
+export const fetchMoreProjects = createAsyncThunk(
+  "/projects/fetchMoreProjects",
+  async (queryParams: any) => {
+    const { data } = await axios.get("/projects", {
+      params: {
+        search: queryParams.search,
+        skip: queryParams.skip,
+        take: queryParams.take,
       },
     });
     return data;
@@ -31,10 +47,20 @@ export const fetchTags = createAsyncThunk("/projects/fetchTags", async () => {
   return data;
 });
 
+export const fetchChoices = createAsyncThunk("/projects/fetchChoices", async () => {
+  const { data } = await axios.get("/projects/getProjectChoices");
+  return data;
+});
+
 const initialState = {
   projects: {
+    pending: false,
+    loadMorePending: false,
     items: [],
+    maxCount: 0,
+    error: false,
     status: "loading",
+    statusMore: "loaded",
   },
   tags: {
     items: [],
@@ -48,6 +74,10 @@ const initialState = {
     items: [],
     status: "loading",
   },
+  choices: {
+    data: null,
+    status: "loading",
+  },
 };
 
 const projectsSlice = createSlice({
@@ -59,12 +89,26 @@ const projectsSlice = createSlice({
       state.projects.status = "loading";
     });
     builder.addCase(fetchProjects.fulfilled, (state, action) => {
-      state.projects.items = action.payload;
+      state.projects.items = action.payload.projects;
+      state.projects.maxCount = action.payload.count;
       state.projects.status = "loaded";
     });
     builder.addCase(fetchProjects.rejected, (state) => {
       state.projects.items = [];
       state.projects.status = "loaded";
+    });
+
+    builder.addCase(fetchMoreProjects.pending, (state) => {
+      state.projects.statusMore = "loading";
+    });
+    builder.addCase(fetchMoreProjects.fulfilled, (state, action) => {
+      state.projects.items = state.projects.items.concat(action.payload.projects);
+      state.projects.maxCount = action.payload.count;
+      state.projects.statusMore = "loaded";
+    });
+    builder.addCase(fetchMoreProjects.rejected, (state) => {
+      state.projects.items = [];
+      state.projects.statusMore = "loaded";
     });
 
     builder.addCase(fetchTags.pending, (state) => {
@@ -101,6 +145,18 @@ const projectsSlice = createSlice({
     builder.addCase(fetchUserProjects.rejected, (state) => {
       state.userProjects.items = [];
       state.userProjects.status = "loaded";
+    });
+
+    builder.addCase(fetchChoices.pending, (state) => {
+      state.choices.status = "loading";
+    });
+    builder.addCase(fetchChoices.fulfilled, (state, action) => {
+      state.choices.data = action.payload;
+      state.choices.status = "loaded";
+    });
+    builder.addCase(fetchChoices.rejected, (state) => {
+      state.choices.data = null;
+      state.choices.status = "loaded";
     });
   },
 });

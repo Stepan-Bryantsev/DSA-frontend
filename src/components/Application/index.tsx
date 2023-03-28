@@ -8,10 +8,11 @@ import styles from "./Application.module.scss";
 import { UserInfo } from "../UserInfo";
 import { ApplicationSkeleton } from "./Skeleton";
 import { Link } from "react-router-dom";
-import { Button } from "@mui/material";
+import { Button, Chip } from "@mui/material";
 
 export const Application = ({
   _id,
+  status,
   message,
   createdAt,
   user,
@@ -26,7 +27,7 @@ export const Application = ({
   const onClickRemove = () => {};
 
   return (
-    <div className={clsx(styles.root)}>
+    <div className={styles.root}>
       <div className={styles.wrapper}>
         <UserInfo {...user} additionalText={createdAt} />
         <div className={styles.indention}>
@@ -34,12 +35,26 @@ export const Application = ({
           <h5>{message}</h5>
         </div>
       </div>
-      <div className={styles.buttons}>
-        <Button onClick={onAccept} size="large" variant="contained">
-          Accept
-        </Button>
-        <Button size="large">Reject</Button>
-      </div>
+      {status === 1 && (
+        <div className={styles.wrapper}>
+          <Button onClick={onAccept} size="large" variant="contained">
+            Accept
+          </Button>
+          <Button size="large" onClick={onReject}>
+            Reject
+          </Button>
+        </div>
+      )}
+      {status === 2 && (
+        <div className={styles.chips}>
+          <Chip label="Rejected" color="error" variant="outlined"></Chip>
+        </div>
+      )}
+      {status === 3 && (
+        <div className={styles.chips}>
+          <Chip label="Accepted" color="success" variant="outlined"></Chip>
+        </div>
+      )}
     </div>
   );
 };

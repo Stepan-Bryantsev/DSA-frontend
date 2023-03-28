@@ -11,7 +11,7 @@
 }
 
 .logo {
-  background-color: black;
+  background-color: grey;
   color: #fff;
   font-weight: 700;
   line-height: 35px;
@@ -22,7 +22,23 @@
   text-decoration: none;
 
   &:hover {
-    background-color: #4361ee;
+    background-color: darkgray;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  &:link {
+    color: #fff;
+    text-decoration: none;
+  }
+  &:active {
+    color: #fff;
+    text-decoration: none;
+  }
+
+  &:visited {
+    color: #fff;
+    text-decoration: none;
   }
 }
 

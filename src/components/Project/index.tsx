@@ -10,9 +10,14 @@ import { ProjectSkeleton } from "./Skeleton";
 import { Link, useNavigate } from "react-router-dom";
 import { Box, Button, Fade, Modal, TextField, Typography } from "@mui/material";
 import axios from "../../axios";
+import moment from "moment";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "../../redux/store";
+import { fetchChoices } from "../../redux/slices/projects";
 
 export const Project = ({
   _id,
+  obj,
   title,
   description,
   createdAt,
@@ -24,17 +29,18 @@ export const Project = ({
   isEditable,
 }: any) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
 
   const [open, setOpen] = React.useState(false);
   const [message, setMessage] = React.useState("");
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const { choices } = useSelector((state: any) => state.projects);
+
   if (isLoading) {
     return <ProjectSkeleton />;
   }
-
-  const onClickRemove = () => {};
 
   const onApply = () => {
     const reqData = {
@@ -73,9 +79,6 @@ export const Project = ({
               <EditIcon />
             </IconButton>
           </Link>
-          <IconButton onClick={onClickRemove} color="secondary">
-            <DeleteIcon />
-          </IconButton>
         </div>
       )}
       <div className={styles.wrapper}>
@@ -86,6 +89,102 @@ export const Project = ({
             {isFullPost ? title : <Link to={`/projects/${_id}`}>{title}</Link>}
           </h2>
           <h5>{description}</h5>
+          {obj.startDate && (
+            <Box className={styles.box}>
+              <Typography fontWeight="bold" paddingRight={"10px"}>
+                Начало:
+              </Typography>
+              <Typography>{moment(obj.startDate).format("LLL")}</Typography>
+            </Box>
+          )}
+          {obj.endDate && (
+            <Box className={styles.box}>
+              <Typography fontWeight="bold" paddingRight={"10px"}>
+                Окончание:
+              </Typography>
+              <Typography>{moment(obj.endDate).format("LLL")}</Typography>
+            </Box>
+          )}
+          {obj.applicationDeadline && (
+            <Box className={styles.box}>
+              <Typography fontWeight="bold" paddingRight={"10px"}>
+                Дедлайн заявки:
+              </Typography>
+              <Typography>{moment(obj.applicationDeadline).format("LLL")}</Typography>
+            </Box>
+          )}
+          {obj.skills && (
+            <Box className={styles.box}>
+              <Typography fontWeight="bold" paddingRight={"10px"}>
+                Требуемые навыки:
+              </Typography>
+              <Typography>{obj.skills}</Typography>
+            </Box>
+          )}
+          {obj.projectType && choices.data && (
+            <Box className={styles.box}>
+              <Typography fontWeight="bold" paddingRight={"10px"}>
+                Тип проекта:
+              </Typography>
+              <Typography>{choices.data.projectTypes[obj.projectType]}</Typography>
+            </Box>
+          )}
+          {obj.employmentType && choices.data && (
+            <Box className={styles.box}>
+              <Typography fontWeight="bold" paddingRight={"10px"}>
+                Тип занятости:
+              </Typography>
+              <Typography>{choices.data.employmentTypes[obj.employmentType]}</Typography>
+            </Box>
+          )}
+          {obj.campus && choices.data && (
+            <Box className={styles.box}>
+              <Typography fontWeight="bold" paddingRight={"10px"}>
+                Кампус:
+              </Typography>
+              <Typography>{choices.data.campuses[obj.campus]}</Typography>
+            </Box>
+          )}
+          {obj.territory && (
+            <Box className={styles.box}>
+              <Typography fontWeight="bold" paddingRight={"10px"}>
+                Терриротия:
+              </Typography>
+              <Typography>{obj.territory}</Typography>
+            </Box>
+          )}
+          {!!obj.participantsNumber && (
+            <Box className={styles.box}>
+              <Typography fontWeight="bold" paddingRight={"10px"}>
+                Количество участников:
+              </Typography>
+              <Typography>{obj.participantsNumber}</Typography>
+            </Box>
+          )}
+          {obj.creditNumber != null && obj.creditNumber !== undefined && (
+            <Box className={styles.box}>
+              <Typography fontWeight="bold" paddingRight={"10px"}>
+                Кредиты:
+              </Typography>
+              <Typography>{obj.creditNumber}</Typography>
+            </Box>
+          )}
+          {!!obj.weeklyHours && (
+            <Box className={styles.box}>
+              <Typography fontWeight="bold" paddingRight={"10px"}>
+                Занятость:
+              </Typography>
+              <Typography>{obj.weeklyHours} ч. в неделю</Typography>
+            </Box>
+          )}
+          {obj.contacts && (
+            <Box className={styles.box}>
+              <Typography fontWeight="bold" paddingRight={"10px"}>
+                Контакты:
+              </Typography>
+              <Typography>{obj.contacts}</Typography>
+            </Box>
+          )}
           <ul className={styles.tags}>
             {tags.map((name: any) => (
               <li key={name}>

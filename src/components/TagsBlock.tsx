@@ -12,7 +12,7 @@ import { SideBlock } from "./SideBlock";
 
 export const TagsBlock = ({ items, isLoading = true }: any) => {
   return (
-    <SideBlock title="Тэги">
+    <SideBlock title="Tags">
       <List>
         {(isLoading ? [...Array(5)] : items).map((name: any, i: any) => (
           <a style={{ textDecoration: "none", color: "black" }} href={`/tags/${name}`}>

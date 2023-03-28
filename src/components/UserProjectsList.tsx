@@ -32,6 +32,7 @@ export const UserProjectsList = () => {
               <Project
                 id={obj.id}
                 _id={obj.id}
+                obj={obj}
                 title={obj.name}
                 description={obj.description}
                 user={{
@@ -46,7 +47,7 @@ export const UserProjectsList = () => {
             )
         )}
         {!isProjectsLoading && userProjects.items?.length === 0 && (
-          <h5 style={{ textAlign: "center", color: "grey" }}>No results</h5>
+          <h5 style={{ textAlign: "center", color: "grey" }}>Нет результатов</h5>
         )}
       </Grid>
     </Grid>

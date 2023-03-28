@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Routes, Route } from "react-router-dom";
 
 import { Header } from "./components";
-import { Home, FullProject, Registration, AddProject, Login } from "./pages";
+import { Home, FullProject, Registration, EditProject, Login, Profile } from "./pages";
 import { fetchUserData, selectIsAuth } from "./redux/slices/auth";
 import { AppDispatch } from "./redux/store";
 
@@ -24,9 +24,11 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/projects/:id" element={<FullProject />} />
-          <Route path="/add-project" element={<AddProject />} />
+          <Route path="/add-project" element={<EditProject editMode={false} />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Registration />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/projects/:id/edit" element={<EditProject editMode={true} />} />
         </Routes>
       </Container>
     </>

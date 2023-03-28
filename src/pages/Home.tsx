@@ -9,7 +9,7 @@ import axios from "../axios";
 
 import { Project } from "../components/Project";
 import { TagsBlock } from "../components/TagsBlock";
-import { fetchProjects, fetchRecommendedProjects } from "../redux/slices/projects";
+import { fetchChoices, fetchProjects, fetchRecommendedProjects } from "../redux/slices/projects";
 import { AppDispatch } from "../redux/store";
 import moment from "moment";
 import { Navigate } from "react-router-dom";
@@ -25,6 +25,10 @@ export const Home = () => {
   const [currentTab, setCurrentTab] = React.useState(0);
 
   const isAuth = useSelector(selectIsAuth);
+
+  React.useEffect(() => {
+    dispatch(fetchChoices());
+  }, []);
 
   if (!isAuth) {
     return <Navigate to="/login" />;
