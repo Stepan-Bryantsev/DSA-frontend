@@ -41,9 +41,9 @@ export const Home = () => {
   return (
     <>
       <Tabs style={{ marginBottom: 15 }} value={currentTab} aria-label="basic tabs example">
-        <Tab label="All projects" onClick={() => setCurrentTab(0)} />
-        <Tab label="Recommended" onClick={() => setCurrentTab(1)} />
-        <Tab label="My projects" onClick={() => setCurrentTab(2)} />
+        <Tab label="Все проекты" onClick={() => setCurrentTab(0)} />
+        <Tab label="Рекомендованные" onClick={() => setCurrentTab(1)} />
+        <Tab label="Мои проекты" onClick={() => setCurrentTab(2)} />
       </Tabs>
       {currentTab === 0 && <AllProjectsList></AllProjectsList>}
       {currentTab === 1 && <RecommendedProjectsList></RecommendedProjectsList>}

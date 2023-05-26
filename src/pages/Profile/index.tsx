@@ -101,7 +101,7 @@ export const Profile = () => {
                 </div>
               )}
               <Typography variant="h6" fontWeight="bold">
-                Profile Information:
+                Профиль:
               </Typography>
 
               {!isEdit && (

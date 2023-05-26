@@ -7,6 +7,7 @@ import { Header } from "./components";
 import { Home, FullProject, Registration, EditProject, Login, Profile } from "./pages";
 import { fetchUserData, selectIsAuth } from "./redux/slices/auth";
 import { AppDispatch } from "./redux/store";
+import { ProjectsByTag } from "./components/ProjectsByTag";
 
 function App() {
   const dispatch = useDispatch<AppDispatch>();
@@ -24,6 +25,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/projects/:id" element={<FullProject />} />
+          <Route path="/tag/:tag" element={<ProjectsByTag />} />
           <Route path="/add-project" element={<EditProject editMode={false} />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Registration />} />

@@ -74,7 +74,7 @@ export const AllProjectsList = () => {
             onInput={(event) => {
               searchQuery((event.target as HTMLInputElement).value);
             }}
-            label="Search projects"
+            label="Поиск проектов"
             variant="outlined"
             placeholder="Search..."
             size="small"

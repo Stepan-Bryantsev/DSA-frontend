@@ -37,6 +37,11 @@ export const fetchRecommendedProjects = createAsyncThunk(
   }
 );
 
+export const fetchProjectsByTag = createAsyncThunk("/projects/byTag", async (tagParam: any) => {
+  const { data } = await axios.get("/projects/byTag", { params: { tag: tagParam } });
+  return data;
+});
+
 export const fetchUserProjects = createAsyncThunk("/projects/fetchUserProjects", async () => {
   const { data } = await axios.get("/projects/my");
   return data;
@@ -67,6 +72,10 @@ const initialState = {
     status: "loading",
   },
   recommendedProjects: {
+    items: [],
+    status: "loading",
+  },
+  byTag: {
     items: [],
     status: "loading",
   },
@@ -133,6 +142,18 @@ const projectsSlice = createSlice({
     builder.addCase(fetchRecommendedProjects.rejected, (state) => {
       state.recommendedProjects.items = [];
       state.recommendedProjects.status = "loaded";
+    });
+
+    builder.addCase(fetchProjectsByTag.pending, (state) => {
+      state.byTag.status = "loading";
+    });
+    builder.addCase(fetchProjectsByTag.fulfilled, (state, action) => {
+      state.byTag.items = action.payload;
+      state.byTag.status = "loaded";
+    });
+    builder.addCase(fetchProjectsByTag.rejected, (state) => {
+      state.byTag.items = [];
+      state.byTag.status = "loaded";
     });
 
     builder.addCase(fetchUserProjects.pending, (state) => {

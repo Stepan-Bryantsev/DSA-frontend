@@ -201,7 +201,7 @@ export const Project = ({
             size="large"
             variant="contained"
           >
-            Apply
+            Подать заявку
           </Button>
         )}
         <Modal
@@ -219,17 +219,17 @@ export const Project = ({
           <Fade in={open}>
             <Box sx={modalStyle}>
               <Typography id="transition-modal-title" variant="h6" component="h2">
-                Apply for this project!
+                Подача заявки
               </Typography>
               <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-                Please write a motivational letter:
+                Пожалуйста, напишите мотивационное письмо:
               </Typography>
               <TextField
                 classes={{ root: styles.inputs }}
                 sx={{ mt: "20px" }}
                 fullWidth
                 multiline
-                label="Message"
+                label="Мотивационное письмо..."
                 value={description}
                 onChange={(e) => setMessage(e.target.value)}
               />
@@ -239,7 +239,7 @@ export const Project = ({
                 size="large"
                 variant="contained"
               >
-                Apply!
+                Подать заявку!
               </Button>
             </Box>
           </Fade>
